@@ -1,0 +1,2 @@
+rootProject.name = 'Zombie_Apocalypse'
+include 'core', 'lwjgl3'

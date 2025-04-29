@@ -1,0 +1,49 @@
+plugins {
+  id 'application'
+  id 'java'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(17)
+  }
+}
+
+group = 'zombie.game'
+version = '1.0'
+
+ext {
+  gdxVersion = '1.12.1'
+  appName = 'Zombie_Apocalypse'
+  projectVersion = '1.0'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+  implementation project(':core')
+}
+
+application {
+  mainClass = 'zombie.game.lwjgl3.Lwjgl3Launcher'
+}
+
+tasks.named('run') {
+  workingDir = file("$rootDir/assets")
+  if (System.properties['os.name'].toLowerCase().contains('mac')) {
+    jvmArgs += "-XstartOnFirstThread"
+  }
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'zombie.game.lwjgl3.Lwjgl3Launcher'
+  }
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}

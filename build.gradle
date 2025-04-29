@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.badlogicgames.gdx:gdx-tools:1.12.1' // Match your LibGDX version
+    }
+}
+
+allprojects {
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    version = '1.0'
+    ext {
+        appName = 'Zombie_Apocalypse'
+        gdxVersion = '1.12.1'
+        freetypeVersion = '1.12.1'
+    }
+
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+project(":core") {
+    apply plugin: "java-library"
+
+    dependencies {
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-freetype:$freetypeVersion"
+    }
+}
