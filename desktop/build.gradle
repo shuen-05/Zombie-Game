@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+group = 'zombie.game'
+version = '1.0'
+
+application {
+    mainClass = 'zombie.game.lwjgl3.Lwjgl3Launcher'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.12.1"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'zombie.game.lwjgl3.Lwjgl3Launcher'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
